@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BloxdCode AI</title>
+<style>
+:root{--bg:#090d18;--panel:#111a2b;--panel2:#0d1524;--line:#24334c;--text:#eef4ff;--muted:#9aabc5;--cyan:#54e1e6;--purple:#9b87ff;--green:#72e6ad;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#192747 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,Arial}
+header{max-width:1180px;margin:auto;padding:28px 22px 12px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:850;font-size:20px;letter-spacing:.2px}.cube{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--purple));display:grid;place-items:center;color:#07111b;font-size:22px}
+.tag{border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:7px 12px;font-size:12px}
+main{max-width:1180px;margin:0 auto;padding:24px 22px 60px}.hero{text-align:center;padding:36px 10px 30px}.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:12px 0;background:linear-gradient(90deg,#fff,#9cecf0 55%,#b8aaff);color:transparent;background-clip:text}.hero p{color:var(--muted);max-width:660px;margin:0 auto}
+.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;align-items:start}.panel{background:linear-gradient(180deg,#121d30,#0e1727);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 18px 50px #0003}.panel h2{font-size:17px;margin:0 0 5px}.sub{font-size:13px;color:var(--muted);margin:0 0 17px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px}.mode{border:1px solid var(--line);background:#0b1423;color:var(--text);border-radius:13px;padding:15px;text-align:left;cursor:pointer;transition:.2s}.mode strong{display:block;font-size:14px}.mode span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.mode.active{border-color:var(--cyan);background:#102a36;box-shadow:inset 0 0 0 1px #54e1e633}.mode.active.world{border-color:var(--purple);background:#211c3b;box-shadow:inset 0 0 0 1px #9b87ff33}
+label{display:block;font-size:13px;font-weight:700;margin:15px 0 7px}textarea{width:100%;min-height:290px;resize:vertical;background:#080f1c;color:#e9f1ff;border:1px solid #2b3b56;border-radius:12px;padding:14px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;outline:none}textarea:focus{border-color:var(--cyan)}.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:7px;gap:10px}.meta .warn{color:#ffc56b}
+input{width:100%;background:#080f1c;color:var(--text);border:1px solid #2b3b56;border-radius:10px;padding:11px 12px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(100deg,var(--cyan),#8ab8ff);color:#07111b;flex:1}.secondary{background:#1b2940;color:var(--text);border:1px solid var(--line)}button:disabled{opacity:.5;cursor:not-allowed}
+.output{min-height:430px;background:#080f1c;border:1px solid #2b3b56;border-radius:12px;overflow:hidden}.outhead{padding:11px 13px;border-bottom:1px solid #24334c;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.outbody{padding:14px;white-space:pre-wrap;overflow:auto;max-height:620px;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.placeholder{color:#778ba8}.status{margin-top:12px;color:var(--muted);font-size:12px;min-height:18px}.notice{margin-top:17px;border:1px solid #6a522a;background:#261f13;color:#f4d59d;border-radius:12px;padding:12px 14px;font-size:12px}.links{display:flex;gap:14px;flex-wrap:wrap;margin-top:17px;font-size:12px}.links a{color:#8fe7ed;text-decoration:none}.links a:hover{text-decoration:underline}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.output{min-height:300px}}@media(max-width:500px){header{align-items:flex-start;flex-direction:column}.modes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="logo"><div class="cube">▦</div>BloxdCode <span style="color:var(--cyan)">AI</span></div><div class="tag">COMMUNITY PROJECT · NICHT OFFIZIELL</div></header>
+<main>
+<section class="hero"><div class="eyebrow">YOUR BLOXD.IO CODING ASSISTANT</div><h1>Deine Idee. Dein Code.</h1><p>Beschreibe, was du in Bloxd.io bauen möchtest. Wähle den passenden Modus und lass dir einen Code-Entwurf erstellen.</p></section>
+<div class="layout">
+<section class="panel">
+<h2>Was möchtest du programmieren?</h2><p class="sub">Wähle zuerst aus, wo dein Code in Bloxd.io laufen soll.</p>
+<div class="modes">
+<button class="mode active" id="blockMode" type="button"><strong>▣ Code Block</strong><span>Code wird durch Aktivieren des Blocks ausgeführt.</span></button>
+<button class="mode" id="worldMode" type="button"><strong>◎ World Code</strong><span>Callbacks und Welt-Ereignisse, z. B. tick.</span></button>
+</div>
+<label for="prompt">Dein Prompt</label>
+<textarea id="prompt" placeholder="Beispiel: Erstelle einen Jump-Pad-Code. Wenn ein Spieler den Code Block aktiviert, soll er mit hoher Kraft nach oben springen. Füge eine verständliche Erklärung hinzu."></textarea>
+<div class="meta"><span id="lineCount">0 / 7.000 Zeilen</span><span id="charCount">0 Zeichen</span></div>
+<label for="apiKey">OpenAI API-Key (wird nur lokal im Browser verwendet)</label>
+<input id="apiKey" type="password" placeholder="sk-... (wird nicht gespeichert)">
+<div class="actions"><button class="btn primary" id="generate">✦ Code generieren</button><button class="btn secondary" id="clear">Leeren</button></div>
+<div class="notice">Hinweis: Dein Prompt darf bis zu 7.000 Zeilen lang sein. Bloxd.io hat eigene Code-Limits; sehr große Ausgaben müssen eventuell aufgeteilt werden. Prüfe generierten Code immer in einer Testwelt.</div>
+</section>
+<section class="panel">
+<h2>Dein Code</h2><p class="sub">Die Antwort erscheint hier. Du kannst sie anschließend kopieren.</p>
+<div class="output"><div class="outhead"><span id="outputMode">CODE BLOCK OUTPUT</span><button class="btn secondary" id="copy" style="padding:6px 10px;font-size:11px">Kopieren</button></div><div class="outbody" id="result"><span class="placeholder">Dein generierter Code wird hier angezeigt …</span></div></div>
+<div class="status" id="status" aria-live="polite">Bereit.</div>
+<div class="links"><a href="https://bloxd.io/docs" target="_blank" rel="noreferrer">Offizielle Code API ↗</a><a href="https://bloxd.io/docs/api-reference" target="_blank" rel="noreferrer">API Reference ↗</a><a href="https://bloxd.io/docs/callbacks" target="_blank" rel="noreferrer">Callbacks ↗</a></div>
+</section>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let mode="block";
+function setMode(next){mode=next;$("blockMode").classList.toggle("active",mode==="block");$("worldMode").classList.toggle("active",mode==="world");$("worldMode").classList.toggle("world",mode==="world");$("outputMode").textContent=mode==="block"?"CODE BLOCK OUTPUT":"WORLD CODE OUTPUT";}
+$("blockMode").onclick=()=>setMode("block");$("worldMode").onclick=()=>setMode("world");
+function updateCounts(){const value=$("prompt").value;const lines=value.length?value.split(/\r\n|\r|\n/).length:0;$("lineCount").textContent=`${lines.toLocaleString("de-DE")} / 7.000 Zeilen`;$("lineCount").classList.toggle("warn",lines>7000);$("charCount").textContent=`${value.length.toLocaleString("de-DE")} Zeichen`;}
+$("prompt").addEventListener("input",updateCounts);
+$("clear").onclick=()=>{$("prompt").value="";updateCounts();$("status").textContent="Prompt geleert.";};
+$("copy").onclick=async()=>{const text=$("result").innerText;if(!text.trim()){ $("status").textContent="Noch kein Code zum Kopieren.";return;}try{await navigator.clipboard.writeText(text);$("status").textContent="Code in die Zwischenablage kopiert.";}catch(e){$("status").textContent="Kopieren nicht möglich. Bitte markiere den Code manuell.";}};
+$("generate").onclick=async()=>{
+ const prompt=$("prompt").value.trim(),key=$("apiKey").value.trim();
+ const lines=prompt?prompt.split(/\r\n|\r|\n/).length:0;
+ if(!prompt){$("status").textContent="Bitte gib zuerst einen Prompt ein.";return;}
+ if(lines>7000){$("status").textContent="Dein Prompt überschreitet die Grenze von 7.000 Zeilen.";return;}
+ if(!key){$("status").textContent="Bitte gib deinen OpenAI API-Key ein. Er wird nicht gespeichert.";return;}
+ $("generate").disabled=true;$("status").textContent="Die KI erstellt deinen Code …";$("result").textContent="Bitte warten …";
+ try{
+  const response=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify({mode,prompt})});
+  const data=await response.json();if(!response.ok)throw new Error(data.error||"Anfrage fehlgeschlagen.");
+  $("result").textContent=data.output||"Die KI hat keinen Text zurückgegeben.";$("status").textContent="Fertig. Bitte prüfe den Code in Bloxd.io.";
+ }catch(err){$("result").textContent="";$("status").textContent="Fehler: "+err.message;}
+ finally{$("generate").disabled=false;}
+};
+</script>
+</body></html>
